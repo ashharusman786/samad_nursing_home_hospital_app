@@ -1,13 +1,39 @@
-// This file is created as a placeholder since Firebase is removed
-// If you want to add Firebase later, run: flutter pub add firebase_core
-// Then run: flutterfire configure
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+// Firebase configuration placeholder
+// For production, replace with actual Firebase configuration
+// Run: flutterfire configure --project=your-project-id
 
 class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        return ios;
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for this platform.',
+        );
+    }
+  }
+
   static const android = FirebaseOptions(
-    apiKey: 'demo-key',
-    appId: 'demo-app-id',
-    messagingSenderId: 'demo-sender-id',
-    projectId: 'demo-project',
+    apiKey: 'AIzaSyDemo-Replace-With-Actual-Key',
+    appId: '1:123456789:android:demo-app-id',
+    messagingSenderId: '123456789',
+    projectId: 'samad-nursing-home-demo',
+    storageBucket: 'samad-nursing-home-demo.appspot.com',
+  );
+
+  static const ios = FirebaseOptions(
+    apiKey: 'AIzaSyDemo-Replace-With-Actual-iOS-Key',
+    appId: '1:123456789:ios:demo-app-id',
+    messagingSenderId: '123456789',
+    projectId: 'samad-nursing-home-demo',
+    storageBucket: 'samad-nursing-home-demo.appspot.com',
+    iosBundleId: 'com.samadhospital.samadNursingHome',
   );
 }
 
