@@ -170,9 +170,22 @@ class HospitalInfoScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                final Uri phoneUri = Uri.parse('tel:+917860120688');
-                                if (await canLaunchUrl(phoneUri)) {
-                                  await launchUrl(phoneUri);
+                                try {
+                                  final Uri phoneUri = Uri.parse('tel:+917860120688');
+                                  if (await canLaunchUrl(phoneUri)) {
+                                    await launchUrl(phoneUri);
+                                  } else {
+                                    throw 'Could not launch phone dialer';
+                                  }
+                                } catch (e) {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Could not open phone dialer'),
+                                        backgroundColor: AppTheme.error,
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                               child: Container(

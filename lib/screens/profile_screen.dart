@@ -6,6 +6,7 @@ import '../utils/app_theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/animated_button.dart';
 import 'edit_profile_screen.dart';
+import 'landing_page.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -254,8 +255,10 @@ class ProfileScreen extends StatelessWidget {
               await userProvider.signOut();
               if (context.mounted) {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/',
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const LandingPage(),
+                  ),
                   (route) => false,
                 );
               }

@@ -262,24 +262,47 @@ Thank you!
 Samad Nursing Home App
       ''';
 
-      final Uri whatsappUri = Uri.parse(
-        'https://wa.me/917860120688?text=${Uri.encodeComponent(message)}',
-      );
+      try {
+        final Uri whatsappUri = Uri.parse(
+          'https://wa.me/917860120688?text=${Uri.encodeComponent(message)}',
+        );
 
-      if (await canLaunchUrl(whatsappUri)) {
-        await launchUrl(whatsappUri);
-        
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Appointment request sent successfully!'),
-              backgroundColor: AppTheme.success,
-            ),
-          );
-          Navigator.of(context).pop();
+        if (await canLaunchUrl(whatsappUri)) {
+          await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+          
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Appointment request sent successfully!'),
+                backgroundColor: AppTheme.success,
+              ),
+            );
+            Navigator.of(context).pop();
+          }
+        } else {
+          throw 'Could not launch WhatsApp';
         }
-      } else {
-        throw 'Could not launch WhatsApp';
+      } catch (e) {
+        // Fallback to SMS if WhatsApp is not available
+        try {
+          final Uri smsUri = Uri.parse('sms:+917860120688?body=${Uri.encodeComponent(message)}');
+          if (await canLaunchUrl(smsUri)) {
+            await launchUrl(smsUri);
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Opening SMS app for appointment request'),
+                  backgroundColor: AppTheme.success,
+                ),
+              );
+              Navigator.of(context).pop();
+            }
+          } else {
+            throw 'Could not launch messaging app';
+          }
+        } catch (smsError) {
+          throw 'Could not send appointment request';
+        }
       }
     } catch (e) {
       if (mounted) {

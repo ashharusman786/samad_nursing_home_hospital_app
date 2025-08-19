@@ -122,11 +122,18 @@ class ServicesScreen extends StatelessWidget {
                 child: AnimatedButton(
                   text: 'Request More Info',
                   onPressed: () async {
-                    final Uri whatsappUri = Uri.parse(
-                      'https://wa.me/917860120688?text=Hi, I would like to know more about your services at Samad Nursing Home.',
-                    );
-                    if (await canLaunchUrl(whatsappUri)) {
-                      await launchUrl(whatsappUri);
+                    try {
+                      final Uri whatsappUri = Uri.parse(
+                        'https://wa.me/917860120688?text=Hi, I would like to know more about your services at Samad Nursing Home.',
+                      );
+                      if (await canLaunchUrl(whatsappUri)) {
+                        await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+                      } else {
+                        throw 'Could not launch WhatsApp';
+                      }
+                    } catch (e) {
+                      // Handle error silently or show a message
+                      print('Could not launch WhatsApp: $e');
                     }
                   },
                   width: double.infinity,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'screens/landing_page.dart';
 import 'providers/language_provider.dart';
 import 'providers/user_provider.dart';
@@ -10,6 +12,16 @@ import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    // Firebase initialization failed - app will work in demo mode
+    print('Firebase initialization failed: $e');
+  }
   
   // Set system UI overlay style
   SystemChrome.setSystemUIOverlayStyle(

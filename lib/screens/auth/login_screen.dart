@@ -59,7 +59,39 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
-      String message = 'Authentication successful! (Demo mode)';
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Authentication successful! (Demo mode)'),
+            backgroundColor: AppTheme.success,
+          ),
+        );
+        
+        // Navigate to main screen even on error (demo mode)
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        await userProvider.updateProfile(
+          name: 'Demo User',
+          age: 25,
+          gender: 'Male',
+          contactNumber: '+91 9876543210',
+          email: _emailController.text.trim(),
+          medicalHistory: '',
+        );
+        
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

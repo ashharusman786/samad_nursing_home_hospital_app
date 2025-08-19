@@ -19,7 +19,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const android = FirebaseOptions(
+  static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDemo-Replace-With-Actual-Key',
     appId: '1:123456789:android:demo-app-id',
     messagingSenderId: '123456789',
@@ -27,7 +27,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'samad-nursing-home-demo.appspot.com',
   );
 
-  static const ios = FirebaseOptions(
+  static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDemo-Replace-With-Actual-iOS-Key',
     appId: '1:123456789:ios:demo-app-id',
     messagingSenderId: '123456789',
@@ -35,18 +35,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'samad-nursing-home-demo.appspot.com',
     iosBundleId: 'com.samadhospital.samadNursingHome',
   );
-}
-
-class FirebaseOptions {
-  const FirebaseOptions({
-    required this.apiKey,
-    required this.appId,
-    required this.messagingSenderId,
-    required this.projectId,
-  });
-
-  final String apiKey;
-  final String appId;
-  final String messagingSenderId;
-  final String projectId;
 }
